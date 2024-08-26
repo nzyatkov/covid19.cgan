@@ -9,18 +9,22 @@ simplefilter(action="ignore", category=pd.errors.PerformanceWarning)
 
 from data_processing.data_processing import DataProcessing
 
-# Признаки, которые будем использовать
-proc_features = ['new_diagnoses', 'hospitalized', 'new_deaths', 'new_tests', 'new_cases_world_minus_china',
-                 'yandex_index', 'IgG']
+# Путь до файла для сохранения подготовленного датасета
+save_data_file = './data/covid_ml_data_Spb.csv'
 
-# COVID-19 данные по миру
+# Путь до исходных данных: COVID-19 данные по миру
 world_data_file = './data/world/owid-covid-data.csv'
-# COVID-19 данные по Спб
+# Путь до исходных данных: COVID-19 данные по Спб
 region_data_file = './data/spb/SPb.COVID-19.united.csv'
 # Данные IgG Инвитро по Спб
 invitro_file = './data/spb/spb-invitro.csv'
 # Данные Индекса самоизоляции от Яндекса в Спб
 yandex_index_file = './data/spb/spb_data.csv'
+
+# Признаки, которые будем использовать
+proc_features = ['new_diagnoses', 'hospitalized', 'new_deaths', 'new_tests', 'new_cases_world_minus_china',
+                 'yandex_index', 'IgG']
+
 
 world_data_data = pd.read_csv(world_data_file, index_col="date", parse_dates=True, na_values=['nan'])
 world_data_data = world_data_data.rename(columns={'new_cases_smoothed': 'new_cases_world_minus_china'})
@@ -120,7 +124,6 @@ for feature in ['new_diagnoses', 'new_tests']:
 
 # lag-дневное приращение логарифма c отсечением выбросов
 outlier_cutoff = 0.01
-
 # 3-49-дневные приращения логарифмов
 for lag in [3, 7, 10, 14, 21, 28, 35, 42, 49]:
 
@@ -172,6 +175,8 @@ for target in targets:
 # Добавляем сами таргеты
 targets = ['new_diagnoses', 'hospitalized']
 for column in targets:
+    # Берём трендовую состовляющую временного ряда методом TSA, как способ сгладить наш таргет
+    # На деле, по сути, это взятие центрированной скользящей средней
     components = tsa.seasonal_decompose(data[column], model='additive', period=14, extrapolate_trend='freq')
     data[column + '_tsa'] = components.trend
 
@@ -191,4 +196,4 @@ for target in ['new_diagnoses_tsa', 'hospitalized_tsa']:
         data[f'target_{target}_{t}d'] = data[target].shift(t)
 
 # Сохраняем подготовленный датасет
-pd.concat([data[:-14].dropna(), data[-14:]]).to_csv("./data/covid_ml_data_Spb.csv")
+pd.concat([data[:-14].dropna(), data[-14:]]).to_csv(save_data_file)
