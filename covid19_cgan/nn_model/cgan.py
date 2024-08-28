@@ -60,8 +60,6 @@ class CGAN:
             self.d_loss_curve.append(d_loss_ave)
 
             # val_g_loss_ave, val_d_loss_ave = val_epoch_loss()
-            # val_g_loss_ave = 0
-            # val_d_loss_ave = 0
             # g_loss_curve_val.append(val_g_loss_ave)
             # d_loss_curve_val.append(val_d_loss_ave)
 

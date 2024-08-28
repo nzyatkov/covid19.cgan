@@ -49,8 +49,6 @@ class Generator:
         bn = BatchNormalization(name='bn')(merged)
 
         hidden_dense = Dense(self.dense_units, activation='relu', name='FC1')(bn)
-        # relu = ReLU(name='RELU_G')(hidden_dense)
-        # relu = LeakyReLU(alpha=0.2, name='LeakyReLU_G')(hidden_dense)
 
         output_1 = Dense(self.output_size, activation='sigmoid', name='new_cases_forecast')(hidden_dense)
 

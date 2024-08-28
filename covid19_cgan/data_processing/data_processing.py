@@ -1,7 +1,3 @@
-import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
-
-
 class DataProcessing:
     @staticmethod
     def fill_empty_values(data, columns):

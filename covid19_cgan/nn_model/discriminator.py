@@ -48,9 +48,6 @@ class Discriminator:
                               forecast], name='Merged')
 
         hidden_dense = Dense(self.dense_units, activation='relu', name='FC1')(merged)
-        # bn = BatchNormalization(name='bn')(hidden_dense)
-        # relu = ReLU(name='RELU_D')(hidden_dense)
-        # relu = LeakyReLU(alpha=0.2, name='LeakyReLU_D')(hidden_dense)
 
         # output_size = 1
         output_1 = Dense(1, activation='sigmoid', name='Output_D')(hidden_dense)
