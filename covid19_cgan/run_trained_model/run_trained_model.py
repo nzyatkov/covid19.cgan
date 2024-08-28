@@ -8,7 +8,7 @@ from pathlib import Path
 import plotly.graph_objects as go
 from ta.trend import SMAIndicator
 
-import constants_run_trained_model as CONSTANTS
+import run_trained_model.constants_run_trained_model as CONSTANTS
 from data_processing.spb_data_processing import SpbDataProcessing
 from logger.logger import get_logger
 from utils.common import normalize_noise
@@ -51,7 +51,7 @@ def run_trained_model():
                                                      start_train, nsample, nsample_forward)
 
     # Load model
-    model_path = Path('../data', 'model')
+    model_path = Path('data', 'model')
     generator = load_model(model_path / CONSTANTS.generator_model_name)
     discriminator = load_model(model_path / CONSTANTS.discriminator_model_name)
 
@@ -176,7 +176,7 @@ def run_trained_model():
                                      name=targets[i]))
 
             fig.update_layout(template='plotly_white',
-                              title=f'Прогноз {targets[i]} случаев по Санкт-Петербургу на {target_var} дней с {y.index[0]}',
+                              title=f'Forecast {targets[i]} for St.Petersburg for the day t+{target_var} from {y.index[0]}',
                               legend_orientation="v",
                               legend=dict(x=0.5, xanchor="center"))
             fig.write_image(f'./data/results/new_cases_f(t+{j + 1}).png',

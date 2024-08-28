@@ -1,6 +1,6 @@
 from datetime import datetime
 
-covid_ml_data_file = "../data/covid_ml_data_Spb.csv"
+covid_ml_data_file = "./data/covid_ml_data_Spb.csv"
 
 generator_model_name = 'generator_full_model.h5'
 discriminator_model_name = 'discriminator_full_model.h5'

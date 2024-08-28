@@ -1,6 +1,6 @@
 from datetime import datetime
 
-covid_ml_data_file = "../data/covid_ml_data_Spb.csv"
+covid_ml_data_file = "./data/covid_ml_data_Spb.csv"
 
 batch_size = 20
 epochs = 200

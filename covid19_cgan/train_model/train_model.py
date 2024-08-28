@@ -6,7 +6,7 @@ import tensorflow as tf
 from keras.optimizers import Adam
 import tensorflow.keras.backend as K
 
-import constants_train_model as CONSTANTS
+import train_model.constants_train_model as CONSTANTS
 from data_processing.spb_data_processing import SpbDataProcessing
 from logger.logger import get_logger
 from nn_model.cgan import CGAN
@@ -17,11 +17,11 @@ from utils.common import normalize_noise
 def train_model():
     _logger = get_logger()
 
-    MODEL_PATH = Path('../data', 'model')
+    MODEL_PATH = Path('data', 'model')
     if not MODEL_PATH.exists():
         MODEL_PATH.mkdir(parents=True, exist_ok=True)
 
-    RESULTS_PATH = Path('../data', 'results')
+    RESULTS_PATH = Path('data', 'results')
     if not RESULTS_PATH.exists():
         RESULTS_PATH.mkdir(parents=True, exist_ok=True)
 
